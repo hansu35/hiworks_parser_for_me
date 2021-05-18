@@ -6,7 +6,7 @@ import time
 
 
 adminTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
-notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 
 # 환경설정 파일 읽기.
 exefilePath = os.path.dirname(sys.argv[0])
