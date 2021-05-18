@@ -23,6 +23,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: do check and notify
+      env:
+        SESSION_ID_FOR_HIWORKS_NOTI: ${{ secrets.SESSION_ID_FOR_HIWORKS_NOTI }}
+        TELEGRAM_BOT_TOKEN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_BOT_TOKEN_FOR_HIWORKS_NOTI }}
+        TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI }}
+        VACATION_URL_FOR_HIWORKS_NOTI: ${{ secrets.VACATION_URL_FOR_HIWORKS_NOTI }}
       run: |
         # 실행해보자 
         python ./getVacation.py
