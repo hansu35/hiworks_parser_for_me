@@ -4,8 +4,8 @@
 name: read hiworks list
 
 on:
-  # push:
-    # branches: [ master ]
+  push:
+    branches: [ master ]
   schedule:
     - cron:  '*/10 * * * *' # 매 10분 마다 실행한다. 
 
