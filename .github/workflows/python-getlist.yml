@@ -7,7 +7,7 @@ on:
   # push:
     # branches: [ master ]
   schedule:
-    - cron:  '20 11 * * *' # 오전 11시 20분에 실행.
+    - cron:  '*/10 * * * *' # 매 10분 마다 실행한다. 
 
 
 jobs:
@@ -33,4 +33,15 @@ jobs:
         VACATION_URL_FOR_HIWORKS_NOTI: ${{ secrets.VACATION_URL_FOR_HIWORKS_NOTI }}
       run: |
         # 실행해보자 
-        python ./getVacation.py
+        python ./getList.py
+    - name: commit
+      run: |
+        git config --local user.email "your@email"
+        git config --local user.name "자동 파싱 이름" # 커밋에 포함될 이름
+        git add tempLast.id
+        git commit -m "자동 업데이트 진행" # 커밋 메세지
+    - name: push
+      uses: ad-m/github-push-action@master
+      with:
+        branch: 'master'
+        github_token: $ 
