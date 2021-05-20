@@ -66,8 +66,6 @@ if os.path.isfile(idFilePath) is False:
     fp.write("0")
     fp.close()
 
-# 텔래그램 아이디를 가지고 오자.
-notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 
 # 세션 아이디를 가지고 오자. 
 sessionid = os.environ.get("SESSION_ID_FOR_HIWORKS_NOTI")
