@@ -108,6 +108,8 @@ if newLastId > storedlastid:
     notiLog("검사후 기존 저장 번호 {0}, 신규 저장번호 {1}".format(storedlastid, newLastId))
 
 notiLog("!!!!!!!!!!!!!!    검사끝    !!!!!!!!!!!!!!!!")
+#echo '::set-output name=SELECTED_COLOR::green'
+print("'::set-output name=list_count::"+(newLastId - storedlastid)+"'")
 
 
 
