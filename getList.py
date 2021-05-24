@@ -110,7 +110,7 @@ if newLastId > storedlastid:
 
 notiLog("!!!!!!!!!!!!!!    검사끝    !!!!!!!!!!!!!!!!")
 #echo '::set-output name=SELECTED_COLOR::green'
-print("'::set-output name=list_count::"+ str(newLastId - storedlastid) + "'")
+print("::set-output name=list_count::"+ str(newLastId - storedlastid) + "")
 
 
 
