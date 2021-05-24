@@ -562,3 +562,18 @@
 [2021 05 24 02:39:42 Mon]파일에 저장되어 있던 마지막 점검 글의 아이디215
 [2021 05 24 02:39:43 Mon]검사후 가장 최신의 글 번호 215
 [2021 05 24 02:39:43 Mon]!!!!!!!!!!!!!!    검사끝    !!!!!!!!!!!!!!!!
+[2021 05 24 03:20:09 Mon]=================검사시작=================
+[2021 05 24 03:20:09 Mon]파일에 저장되어 있던 마지막 점검 글의 아이디215
+[2021 05 24 03:20:11 Mon]하이웍스 파싱에 오류가 발생함.
+[2021 05 24 03:20:11 Mon]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<script>
+alert("보안을 위하여 다시 로그인해 주시기 바랍니다.");
+document.location.href="/renocomms.com/";</script>
+</head>
+<body>
+</body>
+</html>
+
