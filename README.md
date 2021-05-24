@@ -10,5 +10,5 @@
 ## 필요 조건 
 requests  
 beautifulsoup4  
-pyTelegramBotAPI
-pillow
+pyTelegramBotAPI  
+pillow  
