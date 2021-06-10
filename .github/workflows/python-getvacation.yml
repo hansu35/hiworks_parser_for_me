@@ -33,6 +33,7 @@ jobs:
         TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI }}
         VACATION_URL_FOR_HIWORKS_NOTI: ${{ secrets.VACATION_URL_FOR_HIWORKS_NOTI }}
         TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI}}
+        USER_1_NAME_FOR_HIWORKS_NOTI: ${{ secrets.USER_1_NAME_FOR_HIWORKS_NOTI}}
       run: |
         # 실행해보자 
         python ./getVacation.py
@@ -42,14 +43,14 @@ jobs:
         git config --local user.email "your@email"
         git config --local user.name "자동 파싱 이름" # 커밋에 포함될 이름
     - name: git add vac file and commit
-      if: ${{ steps.vac_check.outputs.new_file > 0 }}
+      if: ${{ steps.vac_check.outputs.new_file == True }}
       run: |
         echo "숫자는? ${{ steps.vac_check.outputs.new_file }} "
         git add tempLast.id
         git commit -m "자동 업데이트 진행" # 커밋 메세지
     - name: push
-      if: ${{ steps.check_list.outputs.new_file > 0 }}
+      if: ${{ steps.check_list.outputs.new_file == True }}
       uses: ad-m/github-push-action@master
       with:
-        branch: 'master'
+        branch: 'vacation_file_test'
         github_token: ${{ secrets.GIT_TOKEN}}
