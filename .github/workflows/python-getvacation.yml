@@ -52,5 +52,5 @@ jobs:
       if: ${{ steps.vac_check.outputs.new_file == 'True' }}
       uses: ad-m/github-push-action@master
       with:
-        branch: 'vacation_file_test'
+        branch: 'master'
         github_token: ${{ secrets.GIT_TOKEN}}

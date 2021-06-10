@@ -14,8 +14,8 @@ exefilePath = os.path.dirname(sys.argv[0])
 dbFile = exefilePath+'/holyday.db'
 
 # 텔래그램 아이디를 가지고 오자.
-# notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
-notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+# notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 
 
 #검사해야 하는 이름 
