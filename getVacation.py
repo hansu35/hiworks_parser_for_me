@@ -14,7 +14,12 @@ exefilePath = os.path.dirname(sys.argv[0])
 dbFile = exefilePath+'/holyday.db'
 
 # 텔래그램 아이디를 가지고 오자.
-notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+# notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
+
+
+#검사해야 하는 이름 
+user1Name = os.environ.get("USER_1_NAME_FOR_HIWORKS_NOTI")
 
 holyday = set()
 
@@ -64,6 +69,8 @@ def sendVacationUser():
 
     targetDateString = ""
 
+    newFileWrites = False
+
     # 오늘이 일하는 날이라면... 
     if getWorkingDay(t):
         #메세지를 보내야 한다. 
@@ -80,6 +87,7 @@ def sendVacationUser():
         #while 문이 끝났다면 목표날짜를 찾음... 
         #목표 날짜의 휴가자를 모두 구함. 
         (total, month, day, userList) = hiworksVacation.getTargetDayVacationUserList(targetDateString)
+
         # 휴가자가 있다면..
         if int(total) > 0:
             # 텔레그램으로 전달할 메세지를 작성하기 시작한다. 
@@ -93,6 +101,14 @@ def sendVacationUser():
                 else:
                     resultString += f"{team} {name} : {approvalStatus}\n"
 
+                if user1Name == name: 
+                    if duration == "종일" or duration == "오전":
+                        newFileWrites = True
+                        vacFilePath = exefilePath+"/user1.vac"
+                        with open(vacFilePath, 'w') as fp:
+                            fp.write(targetDateString+"\n")
+
+
 
             # 텔레그램으로 전달.
             telegramModule.sendMessage(notiGroupTelegramId, resultString)
@@ -100,4 +116,7 @@ def sendVacationUser():
 
         print("휴가자 검사끝... 검사날짜 : {0}".format(targetDateString))
 
-sendVacationUser()
+    return newFileWrites
+
+newFileWrites = sendVacationUser()
+print(f"::set-output name=new_file::{newFileWrites}")

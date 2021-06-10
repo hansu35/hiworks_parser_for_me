@@ -4,7 +4,7 @@
 name: read vacation 
 
 on:
-  # push:
+  push:
     # branches: [ master ]
   schedule:
     - cron:  '20 2 * * *' # 오전 11시 20분에 실행. gmt 시간인것으로 보여 수정함. 
@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: do check and notify
+      id: vac_check
       env:
         SESSION_ID_FOR_HIWORKS_NOTI: ${{ secrets.SESSION_ID_FOR_HIWORKS_NOTI }}
         TELEGRAM_BOT_TOKEN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_BOT_TOKEN_FOR_HIWORKS_NOTI }}
@@ -35,3 +36,20 @@ jobs:
       run: |
         # 실행해보자 
         python ./getVacation.py
+    - name: git setting
+      run: |
+        echo "숫자는? ${{ steps.vac_check.outputs.new_file }} "
+        git config --local user.email "your@email"
+        git config --local user.name "자동 파싱 이름" # 커밋에 포함될 이름
+    - name: git add vac file and commit
+      if: ${{ steps.vac_check.outputs.new_file > 0 }}
+      run: |
+        echo "숫자는? ${{ steps.vac_check.outputs.new_file }} "
+        git add tempLast.id
+        git commit -m "자동 업데이트 진행" # 커밋 메세지
+    - name: push
+      if: ${{ steps.check_list.outputs.new_file > 0 }}
+      uses: ad-m/github-push-action@master
+      with:
+        branch: 'master'
+        github_token: ${{ secrets.GIT_TOKEN}}
