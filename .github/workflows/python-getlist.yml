@@ -42,17 +42,14 @@ jobs:
       run: |
         git config --local user.email "your@email"
         git config --local user.name "자동 파싱 이름" # 커밋에 포함될 이름
-        git add check.checklog
-        echo "숫자는? ${{ steps.check_list.outputs.list_count }} "
-    - name: git add tempLast file
-      if: ${{ steps.check_list.outputs.list_count > 0 }}
+    - name: git add tempLast file and commit
+      if: ${{ steps.check_list.outputs.list_count > 1 }}
       run: |
         echo "숫자는? ${{ steps.check_list.outputs.list_count }} "
         git add tempLast.id
-    - name: commit
-      run: |
         git commit -m "자동 업데이트 진행" # 커밋 메세지
     - name: push
+      if: ${{ steps.check_list.outputs.list_count > 1 }}
       uses: ad-m/github-push-action@master
       with:
         branch: 'master'

@@ -19,10 +19,10 @@ def notiLog(message):
     todayString = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     nowTimeString = time.strftime('[%Y %m %d %H:%M:%S %a]', time.localtime(time.time()))
     
-    logfilePath = exefilePath+'/check.checklog'
+    # logfilePath = exefilePath+'/check.checklog'
 
-    with open(logfilePath, 'a') as fp:
-        fp.write(nowTimeString + message+"\n")
+    # with open(logfilePath, 'a') as fp:
+    #     fp.write(nowTimeString + message+"\n")
     print(message)
 
 def htmlStrip(text):
