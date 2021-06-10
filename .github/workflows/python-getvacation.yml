@@ -46,7 +46,7 @@ jobs:
       if: ${{ steps.vac_check.outputs.new_file == 'True' }}
       run: |
         echo "숫자는? ${{ steps.vac_check.outputs.new_file }} "
-        git add tempLast.id
+        git add .
         git commit -m "자동 업데이트 진행" # 커밋 메세지
     - name: push
       if: ${{ steps.check_list.outputs.new_file == 'True' }}
