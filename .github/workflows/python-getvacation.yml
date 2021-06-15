@@ -34,6 +34,7 @@ jobs:
         VACATION_URL_FOR_HIWORKS_NOTI: ${{ secrets.VACATION_URL_FOR_HIWORKS_NOTI }}
         TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI: ${{ secrets.TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI}}
         USER_1_NAME_FOR_HIWORKS_NOTI: ${{ secrets.USER_1_NAME_FOR_HIWORKS_NOTI}}
+        USER_2_NAME_FOR_HIWORKS_NOTI: ${{ secrets.USER_2_NAME_FOR_HIWORKS_NOTI}}
       run: |
         # 실행해보자 
         python ./getVacation.py

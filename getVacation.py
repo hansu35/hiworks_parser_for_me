@@ -20,6 +20,7 @@ notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOT
 
 #검사해야 하는 이름 
 user1Name = os.environ.get("USER_1_NAME_FOR_HIWORKS_NOTI")
+user2Name = os.environ.get("USER_2_NAME_FOR_HIWORKS_NOTI")
 
 holyday = set()
 
@@ -101,12 +102,18 @@ def sendVacationUser():
                 else:
                     resultString += f"{team} {name} : {approvalStatus}\n"
 
-                if user1Name == name: 
-                    if duration == "종일" or duration == "오전":
+                if duration == "종일" or duration == "오전":
+                    if user1Name == name: 
                         newFileWrites = True
                         vacFilePath = exefilePath+"/user1.vac"
                         with open(vacFilePath, 'w') as fp:
-                            fp.write(targetDateString+"\n")
+                            fp.write(targetDateString)
+
+                    if user2Name == name:
+                        newFileWrites = True
+                        vacFilePath = exefilePath+"/user2.vac"
+                        with open(vacFilePath, 'w') as fp:
+                            fp.write(targetDateString)
 
 
 
