@@ -6,7 +6,7 @@ from datetime import date
 from datetime import timedelta
 import sqlite3
 
-import hiworksVacation
+import hiworks
 
 
 # 환경설정 파일 읽기.
@@ -17,6 +17,12 @@ dbFile = exefilePath+'/holyday.db'
 notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 # notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 
+# 세션 아이디를 가지고 오자. 
+sessionid = os.environ.get("SESSION_ID_FOR_HIWORKS_NOTI")
+# 로그인 해더를 추가한다.
+hiworks.requestHeader = {"Cookie": "PHPSESSID={0};".format(sessionid),
+             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36"
+             }
 
 #검사해야 하는 이름 
 user1Name = os.environ.get("USER_1_NAME_FOR_HIWORKS_NOTI")
@@ -87,7 +93,7 @@ def sendVacationUser():
         print("휴가자 검사중... 검사날짜 : {0}".format(targetDateString))
         #while 문이 끝났다면 목표날짜를 찾음... 
         #목표 날짜의 휴가자를 모두 구함. 
-        (total, month, day, userList) = hiworksVacation.getTargetDayVacationUserList(targetDateString)
+        (total, month, day, userList) = hiworks.getTargetDayVacationUserList(targetDateString)
 
         # 휴가자가 있다면..
         if int(total) > 0:
