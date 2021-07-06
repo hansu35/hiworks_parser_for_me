@@ -7,8 +7,12 @@ import re
 import time
 
 hostURL = 'https://office.hiworks.com'
-boardListURL = hostURL+os.environ.get("BOARD_URL_FOR_HIWORKS_NOTI")
-boardURLForm = hostURL+os.environ.get("BOARD_DETAIL_URL_FOR_HIWORKS_NOTI")
+
+boardListURL = f"{hostURL}/{os.environ.get('MIDDLE_URL_FOR_HIWORKS_NOTI')}/bbs/board_ajax/getBoardContentsList"
+boardURLForm = f"{hostURL}/{os.environ.get('MIDDLE_URL_FOR_HIWORKS_NOTI')}/bbs/board/board_view/"
+contactsURL = f"{hostURL}/{os.environ.get('MIDDLE_URL_FOR_HIWORKS_NOTI')}/insa/org_ajax/"
+
+
 
 requestHeader = ""
 
@@ -53,7 +57,7 @@ def getNewList( storedId):
             # 게시판 번호.
             bno = oneArticle.get("fk_board_info_no")
             # 글번호와 게시판 번호로 링크를 생성한다.
-            articleURL = boardURLForm.format(bno,ano)
+            articleURL = f"{boardURLForm}/{bno}/{ano}/"
 
             # 현재 글중에서 가장 높은 아이디를 계산한다. 
             if newHightestID < int(ano):
@@ -169,6 +173,80 @@ def deleteSentFiles(fileFolder):
     os.rmdir(fileFolder)
 
 
+def getAContact(pUserNo):
+    # 개인 주소록 정보를 하나 가져온다. 
+
+    ac = requests.post(
+        url=contactsURL,
+        headers=requestHeader,
+        data={'pMenu':'org_member_info','pUserNo':pUserNo}
+    )
+
+    result = {"result":False}
+
+    data = json.loads(ac.text)
+    if "resultCode" in data:
+        if data.get("resultCode") != "SUCCESS":
+            result["message"] = f"json 파싱하여 결과가 성공 아님. 결과:{data['resultCode']}"
+            result["rawData"] = ac.text
+            return result
+
+        result["result"] = True
+        soup = BeautifulSoup(data.get("result"), 'html.parser')
+
+        profile = soup.find('div', {'class':'profile'})
+        profile_img = profile.find('img')
+
+        profile_img_src = hostURL + profile_img['src']
+
+
+        # 이름과 직책
+        contact_raw_name = soup.find('div',{'class':'proflie_right'})
+        # 연락처 
+        contact_raw_number = soup.find('dl',{'class':'gon'})
+
+        contact_raw_name_list = contact_raw_name.find_all('dd')
+        name_size = len(contact_raw_name_list)
+
+        personData = {}
+
+
+
+        for i in range(name_size):
+            # 처음은 이름 마지막은 직책이다. 
+            if i == 0:
+                personData["name"] = contact_raw_name_list[i].text
+            elif i == name_size - 1:
+                personData["position"] = contact_raw_name_list[i].text.strip() 
+            else:
+                personData[f"name_etc_{i}"] = contact_raw_name_list[i].text.strip()
+
+        # 이름을 찾았으니 사진 url을 저장한다. 
+        profile = soup.find('div', {'class':'profile'})
+        profile_img = profile.find('img')
+
+        profile_img_src = hostURL + profile_img['src']
+        personData["profile_img_src"] = profile_img_src
+        # exefilePath = os.path.dirname(sys.argv[0])
+        # filePath = f"{exefilePath}/{personData['name']}.jpg"
+        # downlaodAFile(filePath, profile_img_src)
+        # personData["profile_img_src"] = profile_img_src
+
+
+        contact_raw_number_title_list = contact_raw_number.find_all('dt')
+        contact_raw_number_detail_list = contact_raw_number.find_all('dd')
+        
+        # 그외 연락처
+        number_size = len(contact_raw_number_title_list)
+        for i in range(number_size):
+            # print(contact_raw_number_title_list[i].text)
+            # print(contact_raw_number_detail_list[i].text)
+            personData[contact_raw_number_title_list[i].text.strip()] = contact_raw_number_detail_list[i].text.strip()
+
+        result["personData"] = personData
+
+
+    return result
 
 
 
