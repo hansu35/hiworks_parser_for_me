@@ -4,7 +4,7 @@
 name: read vacation 
 
 on:
-  # push:
+  push:
     branches: [ master ]
   schedule:
     - cron:  '20 2 * * *' # 오전 11시 20분에 실행. gmt 시간인것으로 보여 수정함. 

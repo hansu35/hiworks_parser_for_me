@@ -11,7 +11,7 @@ on:
 
 
 jobs:
-  build:
+  send_new_article:
 
     runs-on: ubuntu-latest
 
