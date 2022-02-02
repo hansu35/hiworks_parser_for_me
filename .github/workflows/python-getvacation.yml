@@ -5,13 +5,13 @@ name: read vacation
 
 on:
   # push:
-    # branches: [ master ]
+    branches: [ master ]
   schedule:
     - cron:  '20 2 * * *' # 오전 11시 20분에 실행. gmt 시간인것으로 보여 수정함. 
 
 
 jobs:
-  build:
+  send_vacation_message:
 
     runs-on: ubuntu-latest
 
@@ -37,7 +37,7 @@ jobs:
         USER_2_NAME_FOR_HIWORKS_NOTI: ${{ secrets.USER_2_NAME_FOR_HIWORKS_NOTI}}
       run: |
         # 실행해보자 
-        python ./getVacation.py
+        python ./getVacationWithTimeVation.py
     - name: git setting
       run: |
         echo "숫자는? ${{ steps.vac_check.outputs.new_file }} "
