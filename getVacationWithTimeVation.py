@@ -96,7 +96,7 @@ def sendVaction():
                         fp.write(targetDateString)
 
             # 텔레그램으로 전달.
-            telegramModule.sendMessage(notiGroupTelegramId, resultString)
+            telegramModule.sendMessage(notiGroupTelegramId, messageString)
 
         # print(messageString)
 
