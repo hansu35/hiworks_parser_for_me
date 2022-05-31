@@ -11,11 +11,30 @@ notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOT
 # notiGroupTelegramId = os.environ.get("TELEGRAM_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
 
 exefilePath = os.path.dirname(sys.argv[0])
+dbFile = exefilePath+'/holyday.db'
 
 #검사해야 하는 이름 
 user1Name = os.environ.get("USER_1_NAME_FOR_HIWORKS_NOTI")
 user2Name = os.environ.get("USER_2_NAME_FOR_HIWORKS_NOTI")
 
+holyday = set()
+
+# 모든 주말이 아닌 휴일을 holyday 전역 변수에 담는다. 
+def getHolydayList():
+    conn = sqlite3.connect(dbFile)
+    # Connection 으로부터 Cursor 생성
+    cur = conn.cursor()
+ 
+    # SQL 쿼리 실행
+    cur.execute("select strDate from holyday")
+ 
+    # 데이타 Fetch
+    rows = cur.fetchall()
+    for row in rows:
+        holyday.add(row[0])
+ 
+    # Connection 닫기
+    conn.close()
 
 # 전달받은 날짜가 일하는 날인지 판단한다.
 # 전달 받은 객채가 date객채가 아니면 항상 False를 반환한다. 
@@ -24,6 +43,10 @@ def getWorkingDay(d):
         return False
 
     if d.weekday() == 5 or d.weekday() == 6:
+        return False
+
+    tempDateString = d.strftime("%Y.%m.%d")
+    if tempDateString in holyday:
         return False
 
     return True
