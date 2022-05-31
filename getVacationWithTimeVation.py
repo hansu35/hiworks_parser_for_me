@@ -53,6 +53,9 @@ def getWorkingDay(d):
 
 
 def sendVaction():
+    #휴일을 일단 불러온다.
+    getHolydayList()
+    
     #오늘 날짜
     t = date.today()
 
