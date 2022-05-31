@@ -5,6 +5,7 @@ import time
 from datetime import date
 from datetime import timedelta
 import hiworksNewAPI
+import sqlite3
 
 # 텔래그램 아이디를 가지고 오자.
 notiGroupTelegramId = os.environ.get("TELEGRAM_GROUP_ID_OF_ADMIN_FOR_HIWORKS_NOTI")
@@ -55,7 +56,7 @@ def getWorkingDay(d):
 def sendVaction():
     #휴일을 일단 불러온다.
     getHolydayList()
-    
+
     #오늘 날짜
     t = date.today()
 
